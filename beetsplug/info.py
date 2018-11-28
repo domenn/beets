@@ -66,7 +66,6 @@ def library_data(lib, args):
 def library_data_emitter(item):
     def emitter():
         data = dict(item.formatted())
-        data.pop('path', None)  # path is fetched from item
 
         return data, item
     return emitter
@@ -184,6 +183,7 @@ class InfoPlugin(BeetsPlugin):
         included_keys = []
         for keys in opts.included_keys:
             included_keys.extend(keys.split(','))
+        included_keys = [k for k in included_keys if k != 'path'] # Drop path even if user provides it multiple times
         key_filter = make_key_filter(included_keys)
 
         first = True
@@ -239,4 +239,5 @@ def make_key_filter(include):
 
 
 def identity(val):
+    val.pop('path', None) # path is fetched from item
     return val
