@@ -183,7 +183,8 @@ class InfoPlugin(BeetsPlugin):
         included_keys = []
         for keys in opts.included_keys:
             included_keys.extend(keys.split(','))
-        included_keys = [k for k in included_keys if k != 'path'] # Drop path even if user provides it multiple times
+        # Drop path even if user provides it multiple times
+        included_keys = [k for k in included_keys if k != 'path']
         key_filter = make_key_filter(included_keys)
 
         first = True
@@ -239,5 +240,5 @@ def make_key_filter(include):
 
 
 def identity(val):
-    val.pop('path', None) # path is fetched from item
+    val.pop('path', None)  # path is fetched from item
     return val
